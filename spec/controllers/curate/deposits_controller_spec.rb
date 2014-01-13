@@ -11,11 +11,11 @@ describe Curate::DepositsController do
     ).and_return(form)
   end
 
-  def stub_attribute_assignment
+  def assert_attribute_assignment
     form.should_receive(:attributes=).with(deposit_attributes)
   end
 
-  def stub_form_save
+  def assert_form_is_saved
     form.should_receive(:save)
   end
 
@@ -27,9 +27,9 @@ describe Curate::DepositsController do
     context 'assigned @deposit' do
       let(:form) { double('Form') }
       let(:deposit_attributes) { {"title" => 'My Title'} }
-      it 'should be created based on location' do
+      it 'should be instantiated based on location' do
         stub_form_building
-        stub_attribute_assignment
+        assert_attribute_assignment
         get :new, location: 'location_name', as: 'identity_name', deposit_type: 'deposit_type_name', deposit: deposit_attributes
         expect(assigns(:deposit)).to eq(form)
       end
@@ -40,10 +40,11 @@ describe Curate::DepositsController do
     context 'assigned @deposit' do
       let(:form) { double('Form') }
       let(:deposit_attributes) { {"title" => 'My Title'} }
-      it 'should be created based on location' do
+      it 'should be instantiated based on location' do
         stub_form_building
-        stub_attribute_assignment
-        stub_form_save
+        assert_attribute_assignment
+        assert_form_is_saved
+
         post :create, location: 'location_name', as: 'identity_name', deposit_type: 'deposit_type_name', deposit: deposit_attributes
         expect(assigns(:deposit)).to eq(form)
       end

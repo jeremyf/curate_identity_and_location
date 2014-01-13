@@ -1,6 +1,6 @@
 class Curate::DepositsController < ApplicationController
   def new
-    deposit
+    assign_attributes(deposit)
     render text: "Hello"
   end
   protected
@@ -15,4 +15,7 @@ class Curate::DepositsController < ApplicationController
     )
   end
 
+  def assign_attributes(object)
+    object.attributes = params[:deposit]
+  end
 end

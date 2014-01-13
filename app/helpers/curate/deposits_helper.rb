@@ -1,0 +1,2 @@
+module Curate::DepositsHelper
+end

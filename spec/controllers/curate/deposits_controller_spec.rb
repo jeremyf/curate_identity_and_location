@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Curate::DepositsController do
+
+  before :each do
+    controller.stub(:render)
+  end
+
   context 'GET #new action' do
     context 'assigned @deposit' do
       let(:form) { double('Form') }
@@ -12,7 +17,6 @@ describe Curate::DepositsController do
           as: 'identity_name',
           deposit_type: 'deposit_type_name'
         ).and_return(form)
-
         form.should_receive(:attributes=).with(deposit_attributes)
 
         get :new, location: 'location_name', as: 'identity_name', deposit_type: 'deposit_type_name', deposit: deposit_attributes
@@ -20,4 +24,5 @@ describe Curate::DepositsController do
       end
     end
   end
+
 end

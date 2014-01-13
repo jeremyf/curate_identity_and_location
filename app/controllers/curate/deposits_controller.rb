@@ -1,7 +1,9 @@
 class Curate::DepositsController < ApplicationController
+  respond_to :html
   def new
+    validate_form_request(deposit)
     assign_attributes(deposit)
-    render text: "Hello"
+    respond_with(deposit)
   end
   protected
   def deposit
@@ -13,6 +15,10 @@ class Curate::DepositsController < ApplicationController
         as: params.fetch(:as)
       }
     )
+  end
+
+  def validate_form_request(deposit)
+    # This can be pushed down to the deposit form building
   end
 
   def assign_attributes(object)

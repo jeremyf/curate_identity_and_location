@@ -1,10 +1,19 @@
 class Curate::DepositsController < ApplicationController
   respond_to :html
+
   def new
-    validate_form_request(deposit)
+    validate_request(deposit)
     assign_attributes(deposit)
     respond_with(deposit)
   end
+
+  def create
+    validate_request(deposit)
+    assign_attributes(deposit)
+    create_deposit(deposit)
+    respond_with(deposit)
+  end
+
   protected
   def deposit
     @deposit ||= Curate::DepositForm.build(
@@ -17,11 +26,15 @@ class Curate::DepositsController < ApplicationController
     )
   end
 
-  def validate_form_request(deposit)
+  def validate_request(object)
     # This can be pushed down to the deposit form building
   end
 
   def assign_attributes(object)
     object.attributes = params[:deposit]
+  end
+
+  def create_deposit(object)
+    object.save
   end
 end

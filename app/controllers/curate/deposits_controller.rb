@@ -1,5 +1,7 @@
 class Curate::DepositsController < ApplicationController
   respond_to :html
+  class_attribute :new_deposit_form_builder
+  self.new_deposit_form_builder = lambda {|*args| Curate::DepositForm.build(*args) }
 
   def new
     validate_request(deposit)
@@ -16,7 +18,7 @@ class Curate::DepositsController < ApplicationController
 
   protected
   def deposit
-    @deposit ||= Curate::DepositForm.build(
+    @deposit ||= new_deposit_form_builder.call(
       {
         context: self,
         location: params.fetch(:location),
@@ -37,4 +39,5 @@ class Curate::DepositsController < ApplicationController
   def create_deposit(object)
     object.save
   end
+
 end

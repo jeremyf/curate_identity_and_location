@@ -5,6 +5,14 @@ class Curate::DepositsController < ApplicationController
   end
   protected
   def deposit
-    @deposit ||= Curate::DepositForm.new
+    @deposit ||= Curate::DepositForm.build(
+      {
+        context: self,
+        location: params.fetch(:location),
+        deposit_type: params.fetch(:deposit_type),
+        as: params.fetch(:as)
+      }
+    )
   end
+
 end

@@ -1,0 +1,2 @@
+class Curate::Location
+end

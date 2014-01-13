@@ -9,6 +9,8 @@ Bundler.require(:default, Rails.env)
 module CurateIdentityAndLocation
   class Application < Rails::Application
 
+    config.autoload_paths += %W(#{config.root}/app/forms)
+    
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       
